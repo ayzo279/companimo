@@ -98,6 +98,7 @@ const ProfileCreator: React.FC = () => {
         hunger_level: petToAdd.hunger_max,
         friendship_meter: petToAdd.default_friendship,
         last_fed_at: new Date().toISOString(),
+        type: petToAdd.type,
       };
 
       const { data: _, error: petError } = await supabase

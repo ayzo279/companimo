@@ -8,7 +8,7 @@ import ProfileCreator from "../components/ProfileCreator/ProfileCreator";
 import Dashboard from "../components/Dashboard/Dashboard";
 
 const Homepage: React.FC = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const [profileCreated, setProfileCreated] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -18,20 +18,20 @@ const Homepage: React.FC = () => {
       try {
         if (!user) {
           setLoading(false);
-          return; 
+          return;
         }
 
         const { data, error } = await supabase
           .from("user_pets")
           .select("user_id")
           .eq("user_id", user.id)
-          .maybeSingle(); 
+          .maybeSingle();
 
         if (error && error.code !== "PGRST116") {
           console.error("Error checking profile:", error.message);
         }
 
-        setProfileCreated(!!data); 
+        setProfileCreated(!!data);
       } catch (err) {
         console.error("Error checking user or profile:", err);
       } finally {
@@ -43,12 +43,12 @@ const Homepage: React.FC = () => {
   }, [user]);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-    <img src={logo} className="w-[20vw] pt-[4vw] pb-[2vw]" />
+      {!user || !profileCreated ? <img src={logo} className="w-[20vw] pt-[4vw] pb-[2vw]" /> : ""}
       {!user ? <Auth /> : !profileCreated ? <ProfileCreator /> : <Dashboard />}
     </div>
   );
