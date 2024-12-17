@@ -13,11 +13,11 @@ export default {
       'fade': '#AFAFB2',
     },
     fontFamily: {
-      'sans': ['"Nunito"','sans-serif']
+      'sans': ['"Nunito"','sans-serif'],
     },
     extend: {
       boxShadow: {
-        'card': '0 0 1vw rgba(0,0,0,0.25)'
+        'card': '0 0 1vw rgba(0,0,0,0.5)'
       }
     },
   },

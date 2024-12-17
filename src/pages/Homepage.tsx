@@ -12,29 +12,26 @@ const Homepage: React.FC = () => {
   const [profileCreated, setProfileCreated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Check if the user is logged in and if the profile is created
   useEffect(() => {
     const checkUser = async () => {
       setLoading(true);
       try {
         if (!user) {
           setLoading(false);
-          return; // No user logged in
+          return; 
         }
 
-        // Check if the user's profile exists in the `profiles` table
         const { data, error } = await supabase
-          .from("profiles")
+          .from("user_pets")
           .select("user_id")
           .eq("user_id", user.id)
-          .single(); // Fetch the profile row for the logged-in user
+          .maybeSingle(); 
 
         if (error && error.code !== "PGRST116") {
-          // Handle unexpected errors (not a "row not found" error)
           console.error("Error checking profile:", error.message);
         }
 
-        setProfileCreated(!!data); // If data exists, profile is created
+        setProfileCreated(!!data); 
       } catch (err) {
         console.error("Error checking user or profile:", err);
       } finally {
@@ -46,7 +43,7 @@ const Homepage: React.FC = () => {
   }, [user]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator while checking user/profile
+    return <div>Loading...</div>; 
   }
 
   return (
